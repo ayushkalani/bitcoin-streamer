@@ -1,5 +1,8 @@
 # bitcoin-streamer
 
+Steps to run the applications - 
+execute via this file - run.sh
+
 1. Receive streaming bitcoin transaction data from here: https://www.blockchain.com/api/api_websocket
 2. Stream the transaction log to Kafka
 3. Analyze the transactions in realtime and count the rate of transactions on a given minute, save this in Redis
