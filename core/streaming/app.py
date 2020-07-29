@@ -14,6 +14,7 @@ from commons.hit_counter import HitCounter
 from commons.redis_connector import RedisConnector  
 from websocket import create_connection
 from core.producer.producer import Producer
+from config.initializers import REDIS_STREAM_KEY
 
 logger = Logger().get_logger("test")
 transaction_counter = HitCounter()
@@ -25,7 +26,7 @@ def stream():
     ws.send(json.dumps({"op":"unconfirmed_sub"}))
     return ws
 
-def persist_in_redis(r, stream='bitcoin'):
+def persist_in_redis(r, stream=REDIS_STREAM_KEY):
   try:
     global time_counter
     time_counter += 1

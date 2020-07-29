@@ -14,6 +14,7 @@ with open("config/redis.yml", 'rt') as f:
 REDIS_SERVER = redis_config["host"]
 REDIS_PORT = redis_config["port"]
 REDIS_DB = redis_config["database"]
+REDIS_STREAM_KEY = redis_config["stream_name"]
 
 with open("config/logger.yml", 'rt') as f:
     LOGGER_CONFIG = yaml.safe_load(f.read())

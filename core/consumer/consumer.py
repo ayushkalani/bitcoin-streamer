@@ -20,7 +20,7 @@ class Consumer(object):
           self.kafka_consumer = KafkaConsumer(
             group_id=KAFKA_CONSUMER_GROUP_ID,
             bootstrap_servers=KAFKA_BROKER,
-            consumer_timeout_ms=1000
+            consumer_timeout_ms=8000
           ) 
           self.kafka_consumer.subscribe([KAFKA_TOPIC])
       except KeyError as e:
@@ -31,16 +31,22 @@ class Consumer(object):
                               {'ex': traceback.format_exc()})
           raise
 
+    def close(self):
+      self.kafka_consumer.close()
+
 if __name__ == "__main__":
   consumer = Consumer()
   while True:
       consumer.kafka_consumer.poll()
       for message in consumer.kafka_consumer:
-          logger.info('Datapoint from kafka:')
           try:
+              logger.debug ("topic=%s:partition=%d:offset=%d:" % (message.topic, message.partition,message.offset))
               json_message = json.loads(message.value.decode())
-              logger.info('Datapoint from kafka: %s', json_message)
-          except json.JSONDecodeError:
+              #logger.debug('Datapoint from kafka: %s', json_message)
+          except ValueError:
               logger.error("Failed to decode message from Kafka, skipping..")
           except Exception as e:
               logger.error("Generic exception while pulling datapoints from Kafka")
+              traceback.print_exc()
+              consumer.close()
+              sys.exit(1)
