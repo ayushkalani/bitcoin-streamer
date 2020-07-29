@@ -2,21 +2,18 @@ import yaml
 import os
 import subprocess
 
-# REDIS_SERVER='localhost'
-# REDIS_PORT=6379
-# REDIS_DB=15
-# KAFKA_BROKER='localhost:9092'
-
 with open("config/kafka.yml", 'rt') as f:
     kafka_config = yaml.safe_load(f.read())
 KAFKA_BROKER = kafka_config["brokers"][0]
+KAFKA_TOPIC = kafka_config["topic"]
+KAFKA_CONSUMER_GROUP_ID = kafka_config["group_id"]
 
 with open("config/redis.yml", 'rt') as f:
     redis_config = yaml.safe_load(f.read())
 
 REDIS_SERVER = redis_config["host"]
 REDIS_PORT = redis_config["port"]
-REDIS_PASSWORD = redis_config["password"]
+REDIS_DB = redis_config["database"]
 
 with open("config/logger.yml", 'rt') as f:
     LOGGER_CONFIG = yaml.safe_load(f.read())

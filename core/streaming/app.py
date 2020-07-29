@@ -12,7 +12,6 @@ import threading
 from commons.logger import Logger
 from commons.hit_counter import HitCounter
 from commons.redis_connector import RedisConnector  
-from commons.repeated_timer import RepeatedTimer
 from websocket import create_connection
 from core.producer.producer import Producer
 
@@ -31,7 +30,6 @@ def persist_in_redis(r, stream='bitcoin'):
     global time_counter
     time_counter += 1
     data = { time_counter: transaction_counter.get_hit() }
-    logging.info('Pushing data to redis, Relative Minute count = %d, data = %s', time_counter, data)
     r.xadd(stream, data)
   except Exception as ex:
     logger.exception("An exception occured while persisting data to redis")
