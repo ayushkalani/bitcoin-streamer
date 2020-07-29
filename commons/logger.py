@@ -1,10 +1,7 @@
 import os
 import logging
 import logging.config
-import yaml
-
-with open("config/logger.yml", 'rt') as f:
-    LOGGER_CONFIG = yaml.safe_load(f.read())
+from config.initializers import LOGGER_CONFIG
 
 class Logger:
   def __init__(self):

@@ -38,7 +38,7 @@ class HitCounter():
         # Aggregate hits from recent entries in the self.counter list
         epoch_time = int(time.time())
         res = 0
-        print(self.counter)
+        # print(self.counter)
         for (item_timestamp, item_hit) in self.counter:
             if (item_timestamp is not None):
                     res += item_hit if ((epoch_time - item_timestamp) < self.N) else 0
